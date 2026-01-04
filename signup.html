@@ -1,51 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="./style.css" rel="stylesheet">
+
 </head>
 <body>
-<div class="container-fluid">
-    <div class="container">
-        <h1>sign up</h1>
-        <form id="regFrom">
+    <!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+  <div class="container">
+    <!-- Logo / Site Name -->
+    <a class="navbar-brand fw-bold" href="index.html">POSTS</a>
 
-             <div class="mb-3 mt-5">
-    <label for="username" class="form-label">Name</label>
-    <input type="text" class="form-control" id="username" aria-describedby="emailHelp">
+    <!-- Toggle button for mobile -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  </div>
-
-   <div class="mb-3 mt-5">
-    <label for="usercontact" class="form-label">Contact</label>
-    <input type="number" class="form-control" id="usercontact" aria-describedby="emailHelp">
-
-  </div>
-
-
-  <div class="mb-3 mt-5">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-  </div>
-
-
-  <div class="mb-3 mt-5">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1">
-  </div>
-
-
-  <button type="submit" class="btn btn-primary">Submit</button>
-  <p> Have an account? <a href="login.html">Login here</a></p>
-</form>
+    <!-- Right side menu -->
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav align-items-center">
+        <li class="nav-item">
+          <a class="nav-link" href="signup.html" id="signupLink">Signup</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="login.html" id="loginLink">Login</a>
+        </li>
+        <li class="nav-item dropdown" id="profileDropdown" style="display: none;">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            <img src="https://via.placeholder.com/30" alt="Profile" class="rounded-circle">
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="addPost.html">Add Post</a></li>
+            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
+  </div>
+</nav>
+<!-- Navbar End -->
+
+<div class="container mt-5">
+  <h2>Sign Up</h2>
+
+  <form id="regForm">
+    <div class="mb-3">
+      <label for="username" class="form-label">Name</label>
+      <input type="text" id="username" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="userContact" class="form-label">Contact</label>
+      <input type="text" id="userContact" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" id="email" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" id="password" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Sign Up</button>
+    <p class="mt-3">Already have an account? <a href="login.html">Login here</a></p>
+  </form>
 </div>
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-<script type="module" src="./config.js"></script>
+
 <script type="module" src="./authen.js"></script>
-    </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

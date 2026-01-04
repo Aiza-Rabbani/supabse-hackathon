@@ -1,4 +1,3 @@
-// ________________________login
 import supabase from './config.js'
 let loginForm = document.getElementById("loginForm");
 
@@ -31,7 +30,7 @@ async function login(e) {
         icon: "success",
       });
 
-      location.href = "./home.html";
+      location.href = "./index.html";
     }
   } catch (err) {
     console.log(err);

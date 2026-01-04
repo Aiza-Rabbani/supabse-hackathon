@@ -1,63 +1,98 @@
-// authen.js
 import supabase from "./config.js";
 
-let regForm = document.getElementById("regFrom");
-let semail = document.getElementById("exampleInputEmail1");
-let spassword = document.getElementById("exampleInputPassword1");
-let sname = document.getElementById("username");
-let scontact = document.getElementById("usercontact");
 
-async function signup(e) {
-  e.preventDefault();
 
-  if (!semail.value || !spassword.value) {
-    alert("Email and password required");
-    return;
+async function setupNavbar() {
+  const { data } = await supabase.auth.getUser();
+  const user = data.user;
+
+  const signupLink = document.getElementById("signupLink");
+  const loginLink = document.getElementById("loginLink");
+  const profileDropdown = document.getElementById("profileDropdown");
+
+  if (user) {
+    // Hide Signup/Login
+    signupLink.style.display = "none";
+    loginLink.style.display = "none";
+
+    // Show Profile Dropdown
+    profileDropdown.style.display = "block";
+  } else {
+    signupLink.style.display = "block";
+    loginLink.style.display = "block";
+    profileDropdown.style.display = "none";
   }
 
-  try {
-    // 1️⃣ Signup in Supabase Auth
-    const { data, error } = await supabase.auth.signUp({
-      email: semail.value,
-      password: spassword.value,
-      options: {
-        data: {
-          Name: sname.value,
-          phone: scontact.value,
-        },
-      },
+  // Logout
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const { error } = await supabase.auth.signOut();
+      if (!error) location.reload();
     });
-
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    const user = data.user;
-
-    // 2️⃣ Insert user into customers table
-    const { error: dbError } = await supabase
-      .from("users")
-      .insert({
-        uid: user.id,
-        username: sname.value,
-        email: semail.value,
-        role: "user",
-      });
-
-    if (dbError) {
-      alert("Database error: " + dbError.message);
-      return;
-    }
-
-    // 3️⃣ Success
-    regForm.reset();
-    alert("Signup successful!");
-    location.href = "./login.html";
-
-  } catch (err) {
-    console.log(err);
   }
 }
 
-regForm && regForm.addEventListener("submit", signup);
+setupNavbar();
+
+
+const regForm = document.getElementById("regForm");
+if (regForm) {
+  regForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("username").value.trim();
+    const contact = document.getElementById("userContact").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!email || !password) return alert("Email and password are required!");
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { Name: name, phone: contact, role: "user" },
+      },
+    });
+
+    if (error) return alert("Signup failed: " + error.message);
+
+    alert("Signup successful! You can now login.");
+    regForm.reset();
+    location.href = "./login.html";
+  });
+}
+
+const loginForm = document.getElementById("loginForm");
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value.trim();
+
+    if (!email || !password) return alert("Email and password are required!");
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) return alert("Login failed: " + error.message);
+
+    alert("Login successful!");
+    loginForm.reset();
+    location.href = "./index.html"; 
+  });
+}
+
+const logoutBtn = document.getElementById("logBtn");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const { error } = await supabase.auth.signOut();
+    if (!error) alert("Logout successful!");
+  });
+}
